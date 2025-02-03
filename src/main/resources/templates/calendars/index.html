@@ -23,13 +23,15 @@
       <button type="submit">保存</button>
     </form>
     <div class="calendar">
-      <div th:each="day : ${weekDays}" class="item">
-          <span class="date" th:text="'/'"></span>
-        <ul class="content">
-          <li th:each="plan : ${day.plans}" class="plan-list">
-            ・<span th:text="${plan}"></span>
-          </li>
-        </ul>
+      <div th:each="day : ${weekDays}">
+        <div class="item">
+          <div class="date">
+            <span th:text="${day.month} + '/' + ${day.date} + '（' + ${day.dayOfWeek} + '）'"></span>
+          </div>
+          <ul class="content">
+            <li th:each="plan : ${day.plans}" class="plan-list">・<span th:text="${plan}"></span></li>
+          </ul>
+        </div>
       </div>
     </div>
   </body>

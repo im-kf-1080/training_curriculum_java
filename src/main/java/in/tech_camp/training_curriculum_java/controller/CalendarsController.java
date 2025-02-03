@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,7 +45,7 @@ public class CalendarsController {
       newPlan.setPlan(planForm.getPlan());
       planRepository.insert(newPlan);
     }
-    return "redirect:/calendars";
+    return "redirect:/";
   }
 
   private List<Map<String, Object>> getWeek() {
@@ -55,7 +57,7 @@ public class CalendarsController {
     String[] wdays = {"(日)", "(月)", "(火)", "(水)", "(木)", "(金)", "(土)"};
 
     for (int x = 0; x < 7; x++) {
-      Map<String, Object> dayMap = new HashMap<>();
+      Map<String, Object> day_map = new HashMap<>();
       LocalDate currentDate = todaysDate.plusDays(x);
 
       List<String> todayPlans = new ArrayList<>();
@@ -65,9 +67,10 @@ public class CalendarsController {
           }
       }
 
-      dayMap.put("month", currentDate.getMonthValue());
-      dayMap.put("date", currentDate.getDayOfMonth());
-      dayMap.put("plans", todayPlans);
+      day_map.put("month", currentDate.getMonthValue());
+      day_map.put("date", currentDate.getDayOfMonth());
+      day_map.put("plans", todayPlans);
+      day_map.put("dayOfWeek", currentDate.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.JAPAN));
 
       weekDays.add(dayMap);
     }
